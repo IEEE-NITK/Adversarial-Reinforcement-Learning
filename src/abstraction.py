@@ -1,5 +1,7 @@
 import gym
 import gym_compete
+from gym import Wrapper
+from gym.wrappers.monitoring import video_recorder
 from policy import LSTMPolicy, MlpPolicyValue
 from gym import spaces
 from gym.spaces import Tuple, Box, Discrete, MultiDiscrete, MultiBinary
@@ -31,14 +33,15 @@ def setFromFlat(var_list, flat_params):
 
 class Env():
   def __init__(self):
+
     self.metadata = {'render.modes': ['human']}
     super(Env, self).__init__()
     self.env = gym.make("multicomp/KickAndDefend-v0")
-    policy_type = "lstm"
-    self.rew1=0
-    self.rew2=0
     self.now=0
-    config = argparse.Namespace(env='kick-and-defend', max_episodes=1000000, param_paths=['agent-zoo/kick-and-defend/kicker/agent1_parameters-v1.pkl', 'agent-zoo/kick-and-defend/defender/agent2_parameters-v1.pkl'])
+    self.vr = video_recorder.VideoRecorder(self.env, "./videos/"+str(self.now)+".mp4", enabled="./videos/"+str(self.now)+".mp4" is not None)
+    policy_type = "lstm"
+    
+    config = argparse.Namespace(env='kick-and-defend', max_episodes=1000000, param_paths=['agent-zoo/kick-and-defend/kicker/agent1_parameters-v2.pkl', 'agent-zoo/kick-and-defend/defender/agent2_parameters-v1.pkl'])
 
     param_paths = config.param_paths
     tf_config = tf.ConfigProto(
@@ -46,7 +49,8 @@ class Env():
         intra_op_parallelism_threads=1)
     sess = tf.Session(config=tf_config)
     sess.__enter__()
-
+    self.c1=0
+    self.c2=0
     self.policy = []
     self.policy.append(LSTMPolicy(scope="policy0", reuse=False,
                                      ob_space=self.env.observation_space.spaces[0],
@@ -60,15 +64,13 @@ class Env():
     self.action_space = spaces.Box(
             low=-1, high=1,shape=(17,))
 
-        # Prices contains the OHCL values for the last five prices , dtype=np.float32
+        
     self.observation_space = spaces.Box(
             low=0, high=1, shape=(1,384))
     #self.reward_range = (0, 100)
 
   def reset(self):
     self.observation = self.env.reset()
-    self.rew1=0
-    self.rew2=0
     return self.observation[1]
   
   def step(self, action1):
@@ -76,17 +78,27 @@ class Env():
     action0 = self.policy[0].act(stochastic=True, observation=self.observation[0])[0]
     action = (action0,np.asarray(action1))
     self.observation, reward, done, infos = self.env.step(action)
-    self.rew1+=reward[0]
-    self.rew2+=reward[1]
-    self.now+=1
+
     if done:
-        print("Agent 1",self.rew1,"Agent 2",self.rew2)
+        self.vr.close()
+        self.vr.enabled = False
+        self.now+=1
+        self.vr = video_recorder.VideoRecorder(self.env, "./videos/"+str(self.now)+".mp4", enabled="./videos/"+str(self.now)+".mp4" is not None)
 
+        print("Agent 1",reward[0],"Agent 2",reward[1])
 
-    return self.observation[1], reward[1]-reward[0], done, {}
+        if reward[0]>=900:
+            self.c1+=1
+        elif reward[1] >=900:
+            self.c2+=1
+        print(self.c1,self.c2,self.c1+self.c2)
+
+    return self.observation[1], reward[1]/2000, done, {}
 
   def render(self, mode='human', close=False):
     self.env.render()
+    self.vr.capture_frame()
+    
 
 
 #x = Env()
