@@ -1,0 +1,74 @@
+Rewards obtained after running a trained CNN policy (trained for 2e7 timesteps) on Pong for 5e4 timesteps
+
+Pong reward distribution:
+->  +1 reward for the agent if the opponent misses the ball, and vice-versa
+->  Zero-sum game (if one player gets +1 reward, the other gets -1)
+->  0 reward in all other cases when the ball is on the board
+-> An episode ends if one of the players gets a total reward of +21
+
+Data obtained:
+
+Net reward for episode  0 :  [21.]
+Number of timesteps completed:  1646
+Net reward for episode  1 :  [21.]
+Number of timesteps completed:  3286
+Net reward for episode  2 :  [21.]
+Number of timesteps completed:  4925
+Net reward for episode  3 :  [21.]
+Number of timesteps completed:  6573
+Net reward for episode  4 :  [21.]
+Number of timesteps completed:  8216
+Net reward for episode  5 :  [21.]
+Number of timesteps completed:  9858
+Net reward for episode  6 :  [21.]
+Number of timesteps completed:  11496
+Net reward for episode  7 :  [21.]
+Number of timesteps completed:  13146
+Net reward for episode  8 :  [21.]
+Number of timesteps completed:  14794
+Net reward for episode  9 :  [21.]
+
+Mean reward for last 10 episodes:  21.0
+
+Number of timesteps completed:  16434
+Net reward for episode  10 :  [20.]
+Number of timesteps completed:  18135
+Net reward for episode  11 :  [21.]
+Number of timesteps completed:  19782
+Net reward for episode  12 :  [20.]
+Number of timesteps completed:  21512
+Net reward for episode  13 :  [20.]
+Number of timesteps completed:  23248
+Net reward for episode  14 :  [20.]
+Number of timesteps completed:  24987
+Net reward for episode  15 :  [21.]
+Number of timesteps completed:  26625
+Net reward for episode  16 :  [20.]
+Number of timesteps completed:  28315
+Net reward for episode  17 :  [20.]
+Number of timesteps completed:  30081
+Net reward for episode  18 :  [21.]
+Number of timesteps completed:  31719
+Net reward for episode  19 :  [21.]
+
+Mean reward for last 10 episodes:  20.4
+
+Number of timesteps completed:  33410
+Net reward for episode  20 :  [21.]
+Number of timesteps completed:  35095
+Net reward for episode  21 :  [21.]
+Number of timesteps completed:  36739
+Net reward for episode  22 :  [20.]
+Number of timesteps completed:  38435
+Net reward for episode  23 :  [20.]
+Number of timesteps completed:  40154
+Net reward for episode  24 :  [20.]
+Number of timesteps completed:  41809
+Net reward for episode  25 :  [21.]
+Number of timesteps completed:  43452
+Net reward for episode  26 :  [21.]
+Number of timesteps completed:  45096
+Net reward for episode  27 :  [21.]
+Number of timesteps completed:  46783
+Net reward for episode  28 :  [21.]
+Number of timesteps completed:  48471
