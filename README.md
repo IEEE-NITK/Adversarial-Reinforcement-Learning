@@ -24,7 +24,8 @@ We also have a [blog](https://aarl-ieee-nitk.github.io/) with articles on the se
     * [`train.py`](https://github.com/IEEE-NITK/Adversarial-Reinforcement-Learning/blob/master/Adversarial-policies/train.py): Contains the code for training the adversarial policy using [Proximal Policy Optmization](https://aarl-ieee-nitk.github.io/reinforcement-learning,/policy-gradient-methods,/sampled-learning,/optimization/theory/2020/03/25/Proximal-Policy-Optimization.html) (PPO).
     * [`show.py`](https://github.com/IEEE-NITK/Adversarial-Reinforcement-Learning/blob/master/Adversarial-policies/show.py): Contains the testing and video-making part.
     * [`finallog.txt`](https://github.com/IEEE-NITK/Adversarial-Reinforcement-Learning/blob/master/Adversarial-policies/finallog.txt): Output logs from the training procedure.
-    * [`knd3.zip`](https://github.com/IEEE-NITK/Adversarial-Reinforcement-Learning/blob/master/Adversarial-policies/knd3.zip): Trained parameters for the adversarial policy in the Kick-and-Defend environment.
+    * [`knd_results.txt`](https://github.com/IEEE-NITK/Adversarial-Reinforcement-Learning/blob/master/Adversarial-policies/knd_results.txt): Attack accuracy (win percentage of the adversary) in the Kick-and-Defend environment.
+    * [`knd3.zip`](https://github.com/IEEE-NITK/Adversarial-Reinforcement-Learning/blob/master/Adversarial-policies/knd3.zip): Trained parameters for the adversarial policy in Kick-and-Defend.
     * [`videos`](https://github.com/IEEE-NITK/Adversarial-Reinforcement-Learning/tree/master/Adversarial-policies/videos/adversarial): Video displaying the adversarial attack in Kick-and-Defend.
 
 * [`FGSM-on-Images`](https://github.com/IEEE-NITK/Adversarial-Reinforcement-Learning/tree/master/FGSM-on-images) contains a PyTorch implementation of Pixel-based attacks on images and output plots and images with varying perturbations.
