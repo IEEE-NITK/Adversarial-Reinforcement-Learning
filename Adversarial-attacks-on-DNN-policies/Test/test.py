@@ -28,7 +28,7 @@ def test_ppo(env_id, seed, path_to_policy_params, n_envs = 1):
     # The policy is CnnPolicy from stable baselines and has been trained for 2e7 time steps on Pong
     
     model = PPO2.load(path_to_policy_params)
-    #vr = video_recorder.VideoRecorder(env, base_path="./videos/Pong_test_without_attack", enabled="./videos/Pong_test_without_attack" is not None)
+    vr = video_recorder.VideoRecorder(env, base_path="./videos/Pong_test_without_attack", enabled="./videos/Pong_test_without_attack" is not None)
     
     obs = env.reset()
     ep_rew = [0.0]
@@ -37,8 +37,8 @@ def test_ppo(env_id, seed, path_to_policy_params, n_envs = 1):
       action, _states = model.predict(obs)
       obs, rewards, dones, info = env.step(action)
       ep_rew[-1] += rewards
-      #env.render()
-      #vr.capture_frame()
+      env.render()
+      vr.capture_frame()
       if dones:
         obs = env.reset()
         print('Net reward for episode ',ep,': ',ep_rew[-1])

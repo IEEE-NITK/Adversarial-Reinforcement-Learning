@@ -164,8 +164,8 @@ def generate_adv_example_stacked(epsilon):
         pro_obs = torch.tensor(obs, dtype = torch.float32, requires_grad = True)
         
         ep_rew[-1] += reward
-        #env.render()
-        #vr.capture_frame()
+        env.render()
+        vr.capture_frame()
         
         # episode completed
         if done:
@@ -186,7 +186,7 @@ def generate_adv_example_stacked(epsilon):
             print(string)
             f_ptr.write(string + '\n')
     env.close()
-    #vr.close()
+    vr.close()
     # pop the last episode reward to account for its possible incompleteness
     ep_rew.pop()
     return corr_action, adv_action, np.mean(ep_rew)
@@ -196,7 +196,7 @@ epsilons = [0.0001, 0.0003, 0.0005, 0.0007, 0.001, 0.002, 0.003, 0.004, 0.005, 0
 avg_return = []
 f_ptr = open(attack_results, 'a')
 for epsilon in epsilons:
-  #vr = video_recorder.VideoRecorder(env, base_path="./videos/Pong_test_after_attack_epsilon="+str(epsilon), enabled="./videos/Pong_test_after_attack_epsilon="+str(epsilon) is not None)
+  vr = video_recorder.VideoRecorder(env, base_path="./videos/Pong_test_after_attack_epsilon="+str(epsilon), enabled="./videos/Pong_test_after_attack_epsilon="+str(epsilon) is not None)
   string = 'Epsilon = {} \n'.format(epsilon)
   print(string)
   f_ptr.write(string)
