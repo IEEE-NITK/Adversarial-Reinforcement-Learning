@@ -5,8 +5,9 @@ from stable_baselines.common.vec_env import VecFrameStack
 from stable_baselines.common.policies import CnnPolicy, CnnLstmPolicy, CnnLnLstmPolicy, MlpPolicy
 import numpy as np
 import matplotlib.pyplot as plt
+from gym.wrappers.monitoring import video_recorder
 
-def test_ppo(env_id, seed, n_envs = 1, path_to_policy_params):
+def test_ppo(env_id, seed, path_to_policy_params, n_envs = 1):
     
     """
      env_id: typr str, identifies each environment uniquely
@@ -25,7 +26,9 @@ def test_ppo(env_id, seed, n_envs = 1, path_to_policy_params):
     # define the policy
     # create model object for class PPO2
     # The policy is CnnPolicy from stable baselines and has been trained for 2e7 time steps on Pong
+    
     model = PPO2.load(path_to_policy_params)
+    #vr = video_recorder.VideoRecorder(env, base_path="./videos/Pong_test_without_attack", enabled="./videos/Pong_test_without_attack" is not None)
     
     obs = env.reset()
     ep_rew = [0.0]
@@ -34,6 +37,8 @@ def test_ppo(env_id, seed, n_envs = 1, path_to_policy_params):
       action, _states = model.predict(obs)
       obs, rewards, dones, info = env.step(action)
       ep_rew[-1] += rewards
+      #env.render()
+      #vr.capture_frame()
       if dones:
         obs = env.reset()
         print('Net reward for episode ',ep,': ',ep_rew[-1])
@@ -42,6 +47,8 @@ def test_ppo(env_id, seed, n_envs = 1, path_to_policy_params):
         ep_rew.append(0.0)
         ep += 1
         print('Number of timesteps completed: ', i+1)
+    env.close()
+    vr.close()
 
 def test_trpo(env_id, seed, n_envs = 1):
   pass
@@ -49,6 +56,3 @@ def test_trpo(env_id, seed, n_envs = 1):
 
 def test_dqn(env_id, seed, n_envs = 1):
   pass
-
-
-env.close()

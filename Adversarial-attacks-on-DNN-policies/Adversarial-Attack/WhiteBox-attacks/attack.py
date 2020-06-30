@@ -1,9 +1,18 @@
+"""
+White-Box attacks on the Pong agent at inference time.
+
+We use FGSM to compute adversarial perturbations for a trained Neural Network policy.
+
+Here the adversary has access to the training environment, knowledge of the training algorithm and hyperparameters. It also knows the neural network architecture of the target policy and its parameters.
+
+"""
 import gym
 from stable_baselines import TRPO, deepq, PPO2, logger
 from stable_baselines.common.cmd_util import make_atari_env
 from stable_baselines.common.atari_wrappers import  make_atari, wrap_deepmind
 from stable_baselines.common.vec_env import VecFrameStack
 from stable_baselines.common.policies import CnnPolicy, CnnLstmPolicy, CnnLnLstmPolicy, MlpPolicy
+from gym.wrappers.monitoring import video_recorder
 import torch
 import torch.nn as nn 
 import torch.nn.functional as f
@@ -15,7 +24,7 @@ torch.set_printoptions(precision = 8)
 saved_wgts = 'ppo_pong'
 attack_results = 'ppo_pong_attack_stats.txt'
 
-ppo_model = PPO2.load('saved_wgts')
+ppo_model = PPO2.load(saved_wgts)
 
 params = ppo_model.get_parameters()
 param_list = ppo_model.get_parameter_list()
@@ -155,25 +164,29 @@ def generate_adv_example_stacked(epsilon):
         pro_obs = torch.tensor(obs, dtype = torch.float32, requires_grad = True)
         
         ep_rew[-1] += reward
+        #env.render()
+        #vr.capture_frame()
+        
         # episode completed
         if done:
             obs = env.reset()
             obs = np.transpose(obs, [0,3,1,2])/255.0
             pro_obs = torch.tensor(obs, dtype = torch.float32, requires_grad = True)
             
-            str = 'Net reward for episode {} : {}'.format(ep, ep_rew[-1])
-            print(str)
-            f_ptr.write(str + '\n')
+            string = 'Net reward for episode {} : {}'.format(ep, ep_rew[-1])
+            print(string)
+            f_ptr.write(string + '\n')
             if((ep+1)%5 == 0):
-                str = 'Mean reward for the last 5 episodes: {}'.format(np.mean(ep_rew[-5:]))
-                print(str)
-                f_ptr.write(str + '\n')
+                string = 'Mean reward for the last 5 episodes: {}'.format(np.mean(ep_rew[-5:]))
+                print(string)
+                f_ptr.write(string + '\n')
             ep_rew.append(0.0)
             ep += 1
-            str = 'Number of timesteps completed: {}'.format(i+1)
-            print(str)
-            f_ptr.write(str + '\n')
+            string = 'Number of timesteps completed: {}'.format(i+1)
+            print(string)
+            f_ptr.write(string + '\n')
     env.close()
+    #vr.close()
     # pop the last episode reward to account for its possible incompleteness
     ep_rew.pop()
     return corr_action, adv_action, np.mean(ep_rew)
@@ -183,14 +196,15 @@ epsilons = [0.0001, 0.0003, 0.0005, 0.0007, 0.001, 0.002, 0.003, 0.004, 0.005, 0
 avg_return = []
 f_ptr = open(attack_results, 'a')
 for epsilon in epsilons:
-  str = 'Epsilon = {} \n'.format(epsilon)
-  print(str)
-  f_ptr.write(str)
+  #vr = video_recorder.VideoRecorder(env, base_path="./videos/Pong_test_after_attack_epsilon="+str(epsilon), enabled="./videos/Pong_test_after_attack_epsilon="+str(epsilon) is not None)
+  string = 'Epsilon = {} \n'.format(epsilon)
+  print(string)
+  f_ptr.write(string)
   corr_action, adv_action, avg_rew = generate_adv_example_stacked(epsilon)
   avg_return.append(avg_rew)
-  str = 'Epsilon = {}, Non-perturbed action percentage = {} \n'.format(epsilon, (corr_action/(corr_action + adv_action)) * 100)
-  print(str)
-  f_ptr.write(str)
+  string = 'Epsilon = {}, Non-perturbed action percentage = {} \n'.format(epsilon, (corr_action/(corr_action + adv_action)) * 100)
+  print(string)
+  f_ptr.write(string)
 f_ptr.flush()
 
 # Plot results
