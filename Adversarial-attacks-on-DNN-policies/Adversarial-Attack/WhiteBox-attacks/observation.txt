@@ -1,0 +1,1 @@
+Observation - A DQN victim is much easier to attack (Black-Box) than a PPO victim for both, Transferability across policies as well as across algorithms.

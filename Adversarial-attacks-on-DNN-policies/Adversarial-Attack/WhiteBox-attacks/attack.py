@@ -1,7 +1,8 @@
 """
 White-Box attacks on the Pong agent at inference time.
 
-We use FGSM to compute adversarial perturbations for a trained Neural Network policy. Implemented L1, L2, Linf attacks here
+We use FGSM to compute adversarial perturbations for a trained Neural Network policy. 
+Implemented L1, L2, Linf attacks. Two versions of L1 attacks have been implemented.
 Policies used - Two different PPO policies and one DQN policy
 
 Here the adversary has access to the training environment, knowledge of the training algorithm and hyperparameters. It also knows the neural network architecture of the target policy and its parameters.
@@ -35,6 +36,7 @@ def load_from_file(param_pkl_path):
 
 torch.set_printoptions(precision = 8)
 
+# default file locations and names
 # change the filenames here 
 
 attack_results = '/ppoAdv_ppoVic_linf_attack_results.txt'
@@ -240,10 +242,9 @@ def fgsm_l1norm_stacked(original_stack, epsilon, inp_grad_stack):
     perturbed_stack = torch.clamp(perturbed_stack, 0, 1)
     return perturbed_stack, perturbation
 
-# this attack perturbs certain percentage of the all the pixels in each frame by maximal amount
-# x controls the number of pixels to be perturbed maximally using L1 norm
-# x should be more than 0.015 for 84x84 images
-x = 0.09
+# this attack perturbs certain number of pixels in each frame by maximal amount
+n_pixels = 6 # number of pixels to maximally perturb per frame
+mat = h*w
 def fgsm_l1norm_stacked_stronger(original_stack, epsilon, inp_grad_stack):
     d = 1
     for i in original_stack.shape:
@@ -252,39 +253,36 @@ def fgsm_l1norm_stacked_stronger(original_stack, epsilon, inp_grad_stack):
     sign = inp_grad_stack.sign()
     # gradient matrix with absolute values
     abs_inp_grad_stack = torch.abs(inp_grad_stack)
-    
-    perturbed_stack = original_stack
-    
-    n_pixels = int(x * h * w * 0.01)
+    # perturbation and perturbed stacks
+    perturbation = torch.zeros(1,n_frames,h,w)
+    perturbed_stack = torch.zeros(1,n_frames,h,w)
     
     for i in range(n_frames):
-        frame = abs_inp_grad_stack[:,i,:,:]
-        np_frame = frame.reshape(h * w).numpy()
-        
-        pixel_ind = bottleneck.argpartition(np_frame, (h * w) - n_pixels - 1)[-n_pixels:]
-        
-        bool_mask = np.zeros(h * w)
-        
-        bool_mask[pixel_ind] = 1
-        
-        perturbation = torch.tensor(bool_mask).reshape(h, w).float() * sign[:,i,:,:] * epsilon * d
-        
-        perturbed_stack[:,i,:,:] = original_stack[:,i,:,:] + perturbation 
+        # unrolling into 1-D tensor
+        frame_flat = abs_inp_grad_stack[:,i,:,:].reshape(mat)
+        # pixels with maximal intensities per frame (number of pixels controlled by n_pixles)
+        pixel_inds = torch.topk(input = frame_flat, k = n_pixels).indices
+        # 1s at the indices of maximal values
+        bool_mask = torch.zeros(mat)
+        bool_mask[pixel_inds] = 1
+        # perturbation_budget = epsilon * d
+        perturbation[:,i,:,;] = bool_mask.reshape(h, w) * sign[:,i,:,:] * epsilon * d
+        perturbed_stack[:,i,:,:] = original_stack[:,i,:,:] + perturbation[:,i,:,;]
 
     perturbed_stack = torch.clamp(perturbed_stack, 0, 1)
-    return perturbed_stack
+    return perturbed_stack, perturbation
 
 #####################################################################################################
 
 # to use different policies, algorithms and attacks
 net_dict = {'ppo': ppo_net, 'dqn': dqn_net, 'ppo2': ppo2_net}
-norm_dict = {'l1': fgsm_l1norm_stacked, 'l2': fgsm_l2norm_stacked, 'linf': fgsm_linfnorm_stacked, 'l1new': fgsm_l1norm_stacked_stronger}
+norm_dict = {'l1': fgsm_l1norm_stacked, 'l2': fgsm_l2norm_stacked, 'linf': fgsm_linfnorm_stacked, 'l1stronger': fgsm_l1norm_stacked_stronger}
 
 # PONG ACTION SPACE:
 # [0: 'NOOP', 1: 'FIRE', 2: 'RIGHT', 3: 'LEFT', 4: 'RIGHTFIRE', 5: 'LEFTFIRE']
 
 # white box attack
-# RESULTS FOR L1 ATTACK FOR L1 NORM WHITE-BOX ARE ONLY FOR HIGHEST PIXEL perturbation
+# RESULTS FOR L1 ATTACK FOR L1 NORM WHITE-BOX ARE FOR HIGHEST PIXEL PERTURBATION - fgsm_l1norm_stacked
 def generate_adv_example_stacked_white(epsilon = 0.0, victim = 'ppo', norm = 'linf', timesteps = 5000):
     obs = env.reset()
     # proccessed observation

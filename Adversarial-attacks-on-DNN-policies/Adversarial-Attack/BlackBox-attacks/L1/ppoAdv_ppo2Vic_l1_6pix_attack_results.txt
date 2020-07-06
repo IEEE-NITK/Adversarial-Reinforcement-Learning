@@ -1,0 +1,70 @@
+Epsilon = 0.000125 
+Net reward for episode 0 : [-15.]
+Number of timesteps completed: 585
+Net reward for episode 1 : [-6.]
+Number of timesteps completed: 2928
+Net reward for episode 2 : [-3.]
+Number of timesteps completed: 5674
+Net reward for episode 3 : [-6.]
+Number of timesteps completed: 7850
+Net reward for episode 4 : [-8.]
+Mean reward for the last 5 episodes: -7.599999904632568
+Number of timesteps completed: 10148
+Net reward for episode 5 : [-16.]
+Number of timesteps completed: 11445
+Net reward for episode 6 : [-8.]
+Number of timesteps completed: 13581
+Net reward for episode 7 : [-16.]
+Number of timesteps completed: 14776
+Epsilon = 0.000125, Victim Non-perturbed action percentage = 24.833333333333332 
+Epsilon = 0.000125, Adversary Non-perturbed action percentage = 3.026666666666667 
+Epsilon = 0.0005 
+Net reward for episode 0 : [-20.]
+Number of timesteps completed: 727
+Net reward for episode 1 : [13.]
+Number of timesteps completed: 2750
+Net reward for episode 2 : [-14.]
+Number of timesteps completed: 4387
+Net reward for episode 3 : [9.]
+Number of timesteps completed: 6804
+Net reward for episode 4 : [-8.]
+Mean reward for the last 5 episodes: -4.0
+Number of timesteps completed: 9001
+Net reward for episode 5 : [-3.]
+Number of timesteps completed: 11713
+Net reward for episode 6 : [-2.]
+Number of timesteps completed: 14782
+Epsilon = 0.0005, Victim Non-perturbed action percentage = 25.319999999999997 
+Epsilon = 0.0005, Adversary Non-perturbed action percentage = 2.9000000000000004 
+Epsilon = 0.001 
+Net reward for episode 0 : [-4.]
+Number of timesteps completed: 2129
+Net reward for episode 1 : [-17.]
+Number of timesteps completed: 3543
+Net reward for episode 2 : [-5.]
+Number of timesteps completed: 6000
+Net reward for episode 3 : [-9.]
+Number of timesteps completed: 8124
+Net reward for episode 4 : [4.]
+Mean reward for the last 5 episodes: -6.199999809265137
+Number of timesteps completed: 10663
+Net reward for episode 5 : [-3.]
+Number of timesteps completed: 13411
+Epsilon = 0.001, Victim Non-perturbed action percentage = 25.180000000000003 
+Epsilon = 0.001, Adversary Non-perturbed action percentage = 3.026666666666667 
+Epsilon = 0.003 
+Net reward for episode 0 : [-4.]
+Number of timesteps completed: 1154
+Net reward for episode 1 : [-6.]
+Number of timesteps completed: 3552
+Net reward for episode 2 : [-3.]
+Number of timesteps completed: 6240
+Net reward for episode 3 : [-9.]
+Number of timesteps completed: 8376
+Net reward for episode 4 : [-6.]
+Mean reward for the last 5 episodes: -5.599999904632568
+Number of timesteps completed: 10496
+Net reward for episode 5 : [1.]
+Number of timesteps completed: 13380
+Epsilon = 0.003, Victim Non-perturbed action percentage = 24.96666666666667 
+Epsilon = 0.003, Adversary Non-perturbed action percentage = 2.86 
