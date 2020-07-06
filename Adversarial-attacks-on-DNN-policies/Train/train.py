@@ -11,6 +11,8 @@ from stable_baselines import TRPO, deepq, PPO2, logger
 from stable_baselines.common.cmd_util import make_atari_env
 from stable_baselines.common.vec_env import VecFrameStack
 from stable_baselines.common.policies import CnnPolicy, CnnLstmPolicy, CnnLnLstmPolicy, MlpPolicy
+from stable_baselines.deepq.policies import MlpPolicy, CnnPolicy
+from stable_baselines import DQN
 
 log_dir = '/tmp/gym'
 os.makedirs(log_dir, exist_ok=True)
@@ -45,7 +47,7 @@ def callback(_locals, _globals):
     return True
 
 
-def train_ppo(env_id, num_timesteps, seed, policy, n_envs = 1, nminibatches = 5, n_steps = 8000, save_params):
+def train_ppo(env_id, num_timesteps, seed, policy, save_params, n_envs = 1, nminibatches = 5, n_steps = 8000):
 
     """
      env_id: typr str, identifies each environment uniquely
@@ -78,17 +80,6 @@ def train_ppo(env_id, num_timesteps, seed, policy, n_envs = 1, nminibatches = 5,
     env.close()
     # free the memory
     del model
-
-
-
-
-
-
-
-
-
-
-
 
 
 def train_trpo(env_id, num_timesteps, seed):

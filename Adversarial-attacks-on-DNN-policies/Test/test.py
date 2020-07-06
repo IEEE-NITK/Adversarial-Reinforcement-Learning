@@ -1,3 +1,4 @@
+%tensorflow_version 1.x
 from stable_baselines import TRPO, deepq, PPO2, logger
 from stable_baselines.common.cmd_util import make_atari_env
 from stable_baselines.common.atari_wrappers import  make_atari, wrap_deepmind

@@ -19,7 +19,7 @@ We also have a [blog](https://aarl-ieee-nitk.github.io/) with articles on the se
   
   The implementation in this folder is structured as follows:
     * [`agent-zoo`](https://github.com/IEEE-NITK/Adversarial-Reinforcement-Learning/tree/master/Adversarial-policies/agent-zoo): Contains the pre-trained agent parameters for the environments described in [Bansal et al., 2018a](https://arxiv.org/abs/1710.03748). [Source](https://github.com/openai/multiagent-competition)
-    * [`abstraction.py`](https://github.com/IEEE-NITK/Adversarial-Reinforcement-Learning/blob/master/Adversarial-policies/abstraction.py): A wrapper over the Multi-Agent environment (Two player Markov game) to use it as Single-Agent. 
+    * [`abstraction.py`](https://github.com/IEEE-NITK/Adversarial-Reinforcement-Learning/blob/master/Adversarial-policies/abstraction.py): A wrapper over the Multi-Agent environment (Two player Markov game) to use it as Single-Agent. It embeds the victim into the environment, with the adversarial agent taking actions, and receiving observations and reward signals. 
     * [`policy.py`](https://github.com/IEEE-NITK/Adversarial-Reinforcement-Learning/blob/master/Adversarial-policies/policy.py): Contains the implementation of MLP and LSTM network policies of the agents.
     * [`train.py`](https://github.com/IEEE-NITK/Adversarial-Reinforcement-Learning/blob/master/Adversarial-policies/train.py): Contains the code for training the adversarial policy using [Proximal Policy Optmization](https://aarl-ieee-nitk.github.io/reinforcement-learning,/policy-gradient-methods,/sampled-learning,/optimization/theory/2020/03/25/Proximal-Policy-Optimization.html) (PPO).
     * [`show.py`](https://github.com/IEEE-NITK/Adversarial-Reinforcement-Learning/blob/master/Adversarial-policies/show.py): Contains the testing and video-making part.
@@ -43,7 +43,7 @@ We also have a [blog](https://aarl-ieee-nitk.github.io/) with articles on the se
 ## Requirements
 * [PyTorch](https://pytorch.org/) (for Pixel attacks)
 * [Tensorflow](https://www.tensorflow.org/) (for Adversarial policies)
-* [Stable-Baselines](https://github.com/hill-a/stable-baselines) (2.9.0)
+* [Stable-Baselines](https://github.com/hill-a/stable-baselines) (2.10.1a1)
 * [MuJoCo](http://www.mujoco.org/) 131
 
 ## Team
