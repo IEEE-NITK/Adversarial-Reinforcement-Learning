@@ -36,14 +36,16 @@ We also have a [blog](https://aarl-ieee-nitk.github.io/) with articles on the se
 
   [Huang et al., 2017](https://arxiv.org/abs/1702.02284)
 
-  * [`Adversarial-Attack`](https://github.com/IEEE-NITK/Adversarial-Reinforcement-Learning/tree/master/Adversarial-attacks-on-DNN-policies/Adversarial-Attack): Contains the code, stats, and videos for adversarial attack on the Pong agent in [`WhiteBox`](https://github.com/IEEE-NITK/Adversarial-Reinforcement-Learning/tree/master/Adversarial-attacks-on-DNN-policies/Adversarial-Attack/WhiteBox-attacks) as well as [`BlackBox`](https://github.com/IEEE-NITK/Adversarial-Reinforcement-Learning/tree/master/Adversarial-attacks-on-DNN-policies/Adversarial-Attack/BlackBox-attacks) conditions.
+  * [`Adversarial-Attack`](https://github.com/IEEE-NITK/Adversarial-Reinforcement-Learning/tree/master/Adversarial-attacks-on-DNN-policies/Adversarial-Attack): Contains the code, stats, and videos for **L1**, **L2**, **Linf** norm Adversarial attacks on Pong agents in [`WhiteBox`](https://github.com/IEEE-NITK/Adversarial-Reinforcement-Learning/tree/master/Adversarial-attacks-on-DNN-policies/Adversarial-Attack/WhiteBox-attacks) as well as [`BlackBox`](https://github.com/IEEE-NITK/Adversarial-Reinforcement-Learning/tree/master/Adversarial-attacks-on-DNN-policies/Adversarial-Attack/BlackBox-attacks) conditions.
   * [`Test`](https://github.com/IEEE-NITK/Adversarial-Reinforcement-Learning/tree/master/Adversarial-attacks-on-DNN-policies/Test): Code, stats, and videos for the Pong agent before the adversarial attack.
   * [`Train`](https://github.com/IEEE-NITK/Adversarial-Reinforcement-Learning/tree/master/Adversarial-attacks-on-DNN-policies/Train): Code and videos for training a Pong agent using [PPO](https://aarl-ieee-nitk.github.io/reinforcement-learning,/policy-gradient-methods,/sampled-learning,/optimization/theory/2020/03/25/Proximal-Policy-Optimization.html).
-  
+  * [`policy-zoo`](https://github.com/IEEE-NITK/Adversarial-Reinforcement-Learning/tree/master/Adversarial-attacks-on-DNN-policies/policy-zoo): Pre-trained policies used for the attacks.
+  * [`ppo2_pong.zip`](https://github.com/IEEE-NITK/Adversarial-Reinforcement-Learning/tree/master/Adversarial-attacks-on-DNN-policies/ppo2_pong.zip): Trained parameters for the Pong agent trained using [PPO](https://aarl-ieee-nitk.github.io/reinforcement-learning,/policy-gradient-methods,/sampled-learning,/optimization/theory/2020/03/25/Proximal-Policy-Optimization.html).
+
 ## Requirements
-* [PyTorch](https://pytorch.org/) (for Pixel attacks)
-* [Tensorflow](https://www.tensorflow.org/) (for Adversarial policies)
-* [Stable-Baselines](https://github.com/hill-a/stable-baselines) (2.10.1a1)
+* [PyTorch](https://pytorch.org/)
+* [Tensorflow](https://www.tensorflow.org/) (version 1.x)
+* [Stable-Baselines](https://github.com/hill-a/stable-baselines) (version 2.10.1a1)
 * [MuJoCo](http://www.mujoco.org/) 131
 
 ## Team
